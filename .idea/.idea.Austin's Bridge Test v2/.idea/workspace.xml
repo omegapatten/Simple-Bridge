@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05d65463-1f46-47bc-a59d-008b658a805c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PlacementPlane.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PlacementPlane.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placement Plane.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placement Plane.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scene - Bridge Test v2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scene - Bridge Test v2.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlacementPlane.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlacementPlane.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +93,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768239472299</updated>
       <workItem from="1768239473523" duration="3000" />
-      <workItem from="1768239620082" duration="1010000" />
+      <workItem from="1768239620082" duration="5041000" />
     </task>
     <servers />
   </component>
