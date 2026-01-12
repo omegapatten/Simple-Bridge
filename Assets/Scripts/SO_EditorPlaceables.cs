@@ -7,5 +7,5 @@ using UnityEngine;
 //// </summary>
 public class SO_EditorPlaceables : ScriptableObject
 {
-    public IEnumerable<SO_Placeable> _placeables;
+    public List<SO_Placeable> _placeables;
 }

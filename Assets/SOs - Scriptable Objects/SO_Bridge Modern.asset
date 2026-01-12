@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcf7d9e56ab3ed40b8ae2333b30e3ee, type: 3}
+  m_Name: SO_Bridge Modern
+  m_EditorClassIdentifier: 
+  PlaceableName: Bridge - Modern
+  primaryPrefab: {fileID: 5317888322939719391, guid: e2a15c8ce68cbda488c22b0bffef0071, type: 3}
+  secondaryPrefab: {fileID: 7210690410518652099, guid: 8f68edd4b40b37344a8ce55b361755fa, type: 3}
+  tertiaryPrefab: {fileID: 2586759367433330400, guid: 9e0d5c6df95cda348958633975d4d43a, type: 3}
+  fillerPrefab: {fileID: 2332979452738546506, guid: 26dd43fabeb339643827f1f3a8d6eda9, type: 3}
