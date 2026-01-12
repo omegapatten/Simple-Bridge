@@ -5,18 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05d65463-1f46-47bc-a59d-008b658a805c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_End.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_End.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Middle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Middle.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Middle_Extensive.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Middle_Extensive.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Start.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Start.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SOs - Scriptable Objects/SO_Bridge Modern.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SOs - Scriptable Objects/SO_Bridge Modern.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scene - Bridge Test v2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scene - Bridge Test v2.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Level.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Level.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO_Placeable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SO_Placeable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +101,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768239472299</updated>
       <workItem from="1768239473523" duration="3000" />
-      <workItem from="1768239620082" duration="9119000" />
+      <workItem from="1768239620082" duration="9542000" />
     </task>
     <servers />
   </component>

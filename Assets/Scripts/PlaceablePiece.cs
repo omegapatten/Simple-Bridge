@@ -34,4 +34,10 @@ public class PlaceablePiece : MonoBehaviour
     {
         bottomYOffset = yOffsset;
     }
+    
+    public void SetPieceToPlaced()
+    {
+        isPlaced = true;
+        renderer.material = placedMaterial;
+    }
 }

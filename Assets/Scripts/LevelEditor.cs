@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -31,6 +32,11 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     /// the piece that follows the cursor around waiting to be placed
     /// </summary>
     private PlaceablePiece prePlacementPiece;
+    
+    /// <summary>
+    /// The list of pieces that will be placed when the mouse is released.
+    /// </summary>
+    private List<PlaceablePiece> piecesToPlace = new List<PlaceablePiece>();
 
     private void Awake()
     {
@@ -56,17 +62,47 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
 
     public void MouseDownAtPosition(Vector3 position)
     {
-        throw new System.NotImplementedException();
+        // if we're not already placing a placeable then we take the current pre-placement piece and put it in the level at this spot and dont have 
+        // it follow anymore, it's still in preview mode though, 
+        // after we release the mouse then we lock it into where it is
+        
+        if (!isCurrentlyPlacingObject)
+        {
+            isCurrentlyPlacingObject = true;
+            
+            //place the pre-placement piece at the current position
+            prePlacementPiece.transform.position = position;
+            
+            //get the y offset so that the piece sits on the plane
+            var yOffset = prePlacementPiece.bottomYOffset;
+            
+            //move the bottom of the piece sit on the plane
+            prePlacementPiece.transform.position = new Vector3(
+                position.x, 
+                position.y + yOffset, 
+                position.z);
+            
+            Debug.Log("Placed piece at: " + position);
+        }
     }
 
     public void MouseUpAtPosition(Vector3 position)
     {
-        throw new System.NotImplementedException();
+        if (isCurrentlyPlacingObject)
+        {
+            isCurrentlyPlacingObject = false;
+            
+            //loop through all pieces to place and set them as placed
+            foreach (var piece in piecesToPlace)
+            {
+                piece.SetPieceToPlaced();
+            }
+        }
     }
     
     public void MouseDragAtPosition(Vector3 position)
     {
-        throw new System.NotImplementedException();
+        
     }
     
     public void MouseOverAtPosition(Vector3 position)
