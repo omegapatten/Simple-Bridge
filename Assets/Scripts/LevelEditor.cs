@@ -27,11 +27,22 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     /// </summary>
     private bool isCurrentlyPlacingObject = false;
 
+    /// <summary>
+    /// the piece that follows the cursor around waiting to be placed
+    /// </summary>
+    private PlaceablePiece prePlacementPiece;
+
     private void Awake()
     {
         SetDefaultSelectedPlaceable();
     }
 
+    private void Start()
+    {
+        var primaryPrefab = _currentPlaceable.primaryPrefab;
+        prePlacementPiece = Instantiate(primaryPrefab, _level.transform);
+    }
+    
     private void SetDefaultSelectedPlaceable()
     {
         if (_placeables._placeables == null)
@@ -60,10 +71,20 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     
     public void MouseOverAtPosition(Vector3 position)
     {
-        if (!isCurrentlyPlacingObject)
+        if (isCurrentlyPlacingObject)
             return;
         
-        //TODO: show the preview of the currently selected placeable at the position
-        throw new System.NotImplementedException();
+        prePlacementPiece.transform.position = position;
+        
+        //get the y offset so that the piece sits on the plane
+        var yOffset = prePlacementPiece.bottomYOffset;
+        
+        //move the bottom of the piece sit on the plane
+        prePlacementPiece.transform.position = new Vector3(
+            position.x, 
+            position.y + yOffset, 
+            position.z);
+        
+        Debug.Log("Placed pre-placement piece at: " + position);
     }
 }

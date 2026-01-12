@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SO_Bridge Modern
   m_EditorClassIdentifier: 
   PlaceableName: Bridge - Modern
-  primaryPrefab: {fileID: 5317888322939719391, guid: e2a15c8ce68cbda488c22b0bffef0071, type: 3}
-  secondaryPrefab: {fileID: 7210690410518652099, guid: 8f68edd4b40b37344a8ce55b361755fa, type: 3}
-  tertiaryPrefab: {fileID: 2586759367433330400, guid: 9e0d5c6df95cda348958633975d4d43a, type: 3}
-  fillerPrefab: {fileID: 2332979452738546506, guid: 26dd43fabeb339643827f1f3a8d6eda9, type: 3}
+  primaryPrefab: {fileID: 9186820865422824459, guid: e2a15c8ce68cbda488c22b0bffef0071, type: 3}
+  secondaryPrefab: {fileID: 548862309569820148, guid: 8f68edd4b40b37344a8ce55b361755fa, type: 3}
+  tertiaryPrefab: {fileID: 8418105715774375016, guid: 9e0d5c6df95cda348958633975d4d43a, type: 3}
+  fillerPrefab: {fileID: 3335263119188494715, guid: 26dd43fabeb339643827f1f3a8d6eda9, type: 3}

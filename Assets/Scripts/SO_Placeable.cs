@@ -9,17 +9,17 @@ public class SO_Placeable : ScriptableObject
     /// Prefab to show when placing this object alone
     /// if the object can be placed in a line, this is the prefab used at the beginning
     /// </summary>
-    public GameObject primaryPrefab;
+    public PlaceablePiece primaryPrefab;
     /// <summary>
     /// Shown at the end of a line if the object can be placed in a line
     /// </summary>
-    public GameObject secondaryPrefab;
+    public PlaceablePiece secondaryPrefab;
     /// <summary>
     /// shown in the middle of a line if the object can be placed in a line
     /// </summary>
-    public GameObject tertiaryPrefab;
+    public PlaceablePiece tertiaryPrefab;
     /// <summary>
     /// used to fill in gaps if the object can be placed in a line and the tertiary portion doesn't fit exactly
     /// </summary>
-    public GameObject fillerPrefab;
+    public PlaceablePiece fillerPrefab;
 }
