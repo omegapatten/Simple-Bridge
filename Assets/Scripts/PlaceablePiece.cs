@@ -5,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public class PlaceablePiece : MonoBehaviour
 {
-    [SerializeField] private Renderer renderer;
+    [SerializeField] private Renderer pieceRenderer;
     /// <summary>
     /// material used when previewing placement
     /// </summary>
@@ -27,7 +27,7 @@ public class PlaceablePiece : MonoBehaviour
     private void Start()
     {
         SetBottomYOffset();
-        renderer.material = previewMaterial;
+        pieceRenderer.material = previewMaterial;
     }
     
     private void SetBottomYOffset()
@@ -38,6 +38,15 @@ public class PlaceablePiece : MonoBehaviour
     public void SetPieceToPlaced()
     {
         isPlaced = true;
-        renderer.material = placedMaterial;
+        pieceRenderer.material = placedMaterial;
+    }
+
+    /// <summary>
+    /// get the size of the placeable piece on the x axis
+    /// </summary>
+    /// <returns></returns>
+    public float GetXSize()
+    {
+        return pieceRenderer.bounds.size.x;
     }
 }

@@ -12,10 +12,10 @@ public class PlacementPlane : MonoBehaviour
     /// </summary>
     public interface IPlacementPlaneListener
     {
-        void MouseDownAtPosition(Vector3 position);
-        void MouseUpAtPosition(Vector3 position);
-        void MouseDragAtPosition(Vector3 position);
-        void MouseOverAtPosition(Vector3 position);
+        internal void PlacementPlaneMouseDownAtPosition(Vector3 position);
+        internal void PlacementPlaneMouseUpAtPosition(Vector3 position);
+        internal void PlacementPlaneMouseDragAtPosition(Vector3 position);
+        internal void PlacementPlaneMouseOverAtPosition(Vector3 position);
     }
     
     /// <summary>
@@ -36,25 +36,25 @@ public class PlacementPlane : MonoBehaviour
     private void OnMouseDown()
     {
         var placementPosition = GetMouseWorldPosition();
-        _placementPlaneListener.MouseDownAtPosition(placementPosition);
+        _placementPlaneListener.PlacementPlaneMouseDownAtPosition(placementPosition);
     }
     
     private void OnMouseUp()
     {
         var placementPosition = GetMouseWorldPosition();
-        _placementPlaneListener.MouseUpAtPosition(placementPosition);
+        _placementPlaneListener.PlacementPlaneMouseUpAtPosition(placementPosition);
     }
 
     private void OnMouseDrag()
     {
         var placementPosition = GetMouseWorldPosition();
-        _placementPlaneListener.MouseDragAtPosition(placementPosition);
+        _placementPlaneListener.PlacementPlaneMouseDragAtPosition(placementPosition);
     }
 
     private void OnMouseOver()
     {
         var placementPosition = GetMouseWorldPosition();
-        _placementPlaneListener.MouseOverAtPosition(placementPosition);
+        _placementPlaneListener.PlacementPlaneMouseOverAtPosition(placementPosition);
     }
 
     /// <summary>
