@@ -8,44 +8,45 @@ using UnityEngine;
 /// </summary>
 public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener, Draggable.IListener
 {
-    /// <summary>
-    /// The level object used to hold the placed objects 
-    /// </summary>
-    [SerializeField] private Level _level;
+    [Header("Internal Dependencies")]
+    /// <summary> The level being edited </summary>
+    [SerializeField] private Level _level; 
+    /// <summary> Plane used for input placement </summary>
     [SerializeField] private PlacementPlane _placementPlane;
-    /// <summary>
-    /// The collection of palceables that can be used in the level editor
-    /// </summary>
-    [SerializeField] private SO_EditorPlaceables _placeables;
+    /// <summary> The list of placeables available to place in the level </summary>
+    [SerializeField] private SO_EditorPlaceables _placeables; // the list of placeables available to place in the level
 
-    /// <summary>
-    /// The selected placeable to be placed in the level
-    /// </summary>
+    /// <summary> The selected placeable to be placed in the level</summary>
     private SO_Placeable _currentPlaceable;
-
     /// <summary>
     /// Tracks if the user is currently placing a placeable.
     /// While true, we are in a "dragging a line" placement session.
     /// </summary>
     private bool isDraggingPieces = false;
+    /// <summary>
+    /// Cached references to the anchor piece during drag placement
+    /// </summary>
     private PlaceablePiece cachedAnchorPiece;
+    /// <summary>
+    /// Cached references to the  mobile piece during drag placement
+    /// </summary>
     private PlaceablePiece cachedMobilePiece;
     /// <summary>
     /// When true, prevents new bridges 
     /// </summary>
     private bool initialPiecesPlaced = false;
-
     /// <summary>
     /// The list of pieces that will be placed when the mouse is released.
     /// </summary>
     private readonly List<PlaceablePiece> piecesToPlace = new List<PlaceablePiece>();
-
     /// <summary>
     /// the piece that follows the cursor around waiting to be placed
+    /// only used for initial palcement
     /// </summary>
     private PlaceablePiece prePlacementPiece;
     /// <summary>
     /// The "end piece" that follows the cursor around during drag placement
+    /// only used for initial placement
     /// </summary>
     private PlaceablePiece secondaryPreviewPiece;
     /// <summary>
@@ -56,15 +57,12 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     /// The pieces that fill in when the middle pieces don't fit exactly during drag placement
     /// </summary>
     private readonly List<PlaceablePiece> fillerPreviewPieces = new List<PlaceablePiece>();
-
     /// <summary>
     /// minimum distance the mouse must move to register as a drag
     /// </summary>
     private const float MinDragDistance = 0.01f;
-    
     /// <summary>
     /// some hardcoded rotations to make the pieces face the right way.
-    /// TODO: put these in the SO_Placeable instead so that different placeables can have different offsets. Out of scope for this prototype.
     /// </summary>
     private float _lookRotationYawOffsetDegrees = -90f;
 
@@ -97,7 +95,7 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     {
         if (_placeables._placeables == null)
         {
-            throw new System.Exception("No placeables assigned to level editor");
+            throw new Exception("No placeables assigned to level editor");
         }
 
         // Select the first placeable as the default

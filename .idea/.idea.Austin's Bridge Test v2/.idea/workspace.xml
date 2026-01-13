@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05d65463-1f46-47bc-a59d-008b658a805c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PiecePool.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PiecePool.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Start.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Start.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +25,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0004165128be453398769144f78ad2921eae00/6b/0bf22c37/Component.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0004165128be453398769144f78ad2921eae00/eb/1570c5fb/Object.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0cc9af11f70040389ae32d92d840ee93200000/0d/fbc06092/LayoutDataStore.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PiecePool.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -105,7 +106,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768239472299</updated>
       <workItem from="1768239473523" duration="3000" />
-      <workItem from="1768239620082" duration="30975000" />
+      <workItem from="1768239620082" duration="31910000" />
     </task>
     <servers />
   </component>
