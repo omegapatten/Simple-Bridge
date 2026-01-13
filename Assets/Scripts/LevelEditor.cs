@@ -177,45 +177,58 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         mousePosOnPlane.y = 0f;
         var distance = Vector3.Distance(primaryPosOnPlane, mousePosOnPlane);
         
-        //get sizes of the tertiary and filler pieces
-        var tertiaryStep = _currentPlaceable.tertiaryPrefab.GetXSize();
-        var fillerStep = _currentPlaceable.fillerPrefab.GetXSize();
+        //get sizes of the pieces for positioning
+        var tertiaryWidth = _currentPlaceable.tertiaryPrefab.GetXSize();
+        var fillerWidth = _currentPlaceable.fillerPrefab.GetXSize();
+        var firstPlaceableWidth = prePlacementPiece.GetXSize();
 
-        // Start placing pieces slightly away from the anchor to avoid immediate overlap.
-        const float endInset = 0.5f;
-        var usable = Mathf.Max(0f, distance - (2f * endInset));
-        var tertiaryCount = Mathf.FloorToInt(usable / tertiaryStep);
-
+        //start tiertiary pieces
+        var areaToFill = Mathf.Max(0f, distance - firstPlaceableWidth);
+        var tertiaryCount = Mathf.FloorToInt(areaToFill / tertiaryWidth);
         ResizePieceList(tertiaryPreviewPieces, tertiaryCount, _currentPlaceable.tertiaryPrefab);
+        
+        // Prepare filler pieces to fill any leftover space after tertiary pieces.
+        var usedByTertiary = tertiaryCount * tertiaryWidth;
+        //area needed to be filled by fillers
+        var fillerArea = Mathf.Max(0f, areaToFill - usedByTertiary);
+        var fillerCount = Mathf.CeilToInt(fillerArea / fillerWidth); //add 2 to cover gaps while spawning
+        
+        if (tertiaryCount > 0)
+            fillerCount += 2; //covers gaps when there are tertiary pieces present
+        else 
+            fillerCount += 1; 
+        
+        //make sure filler count is even to balance pieces on both sides
+        if (fillerCount % 2 != 0)
+            fillerCount += 1;
+        
+        ResizePieceList(fillerPreviewPieces, fillerCount, _currentPlaceable.fillerPrefab);
 
         // Place tertiary pieces.
-        var start = endInset + (tertiaryStep * 0.5f);
+        var halfOfFillersOffset = fillerArea * 0.5f; // center the tertiary pieces if fillers are present
+        var tertiaryStart = (tertiaryWidth * 0.5f) + halfOfFillersOffset + firstPlaceableWidth/2;
         for (var i = 0; i < tertiaryPreviewPieces.Count; i++)
         {
-            var t = start + (i * tertiaryStep);
-            var pos = primaryPos + (forward * t);
+            var distanceFromOrigin = tertiaryStart + (i * tertiaryWidth);
+            var pos = primaryPos + (forward * distanceFromOrigin);
             var piece = tertiaryPreviewPieces[i];
             piece.transform.position = ApplyBottomYOffset(piece, pos);
             piece.transform.rotation = rotForward;
         }
 
-        // Leftover space after tertiaries.
-        var usedByTertiary = tertiaryCount * tertiaryStep;
-        var leftover = Mathf.Max(0f, usable - usedByTertiary);
-
-        // Fill leftover with filler pieces.
-        var fillerCount = 0;
-        if (_currentPlaceable.fillerPrefab != null && fillerStep > 0.0001f)
-            fillerCount = Mathf.FloorToInt(leftover / fillerStep);
-
-        ResizePieceList(fillerPreviewPieces, fillerCount, _currentPlaceable.fillerPrefab);
-
-        // Place filler pieces immediately after the last tertiary segment.
-        var fillerStart = endInset + usedByTertiary + (fillerStep * 0.5f);
+        //place filler pieces before and after tertiary pieces
+        var fillerStart = fillerWidth * 0.25f + firstPlaceableWidth * 0.5f;
         for (var i = 0; i < fillerPreviewPieces.Count; i++)
         {
-            var t = fillerStart + (i * fillerStep);
-            var pos = primaryPos + (forward * t);
+            var distanceFromOrigin = fillerStart + (i * fillerWidth);
+            
+            if (i > fillerPreviewPieces.Count / 2 - 1 && tertiaryCount > 0)
+            {
+                //second half of fillers go after tertiary pieces
+                distanceFromOrigin += (usedByTertiary - fillerWidth*1.75f);
+            }
+            
+            var pos = primaryPos + (forward * distanceFromOrigin);
             var piece = fillerPreviewPieces[i];
             piece.transform.position = ApplyBottomYOffset(piece, pos);
             piece.transform.rotation = rotForward;

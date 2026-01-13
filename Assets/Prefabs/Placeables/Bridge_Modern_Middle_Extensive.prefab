@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3421686de9c281d4b876b55e52b69253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 5776585465940995983}
+  pieceRenderer: {fileID: 5776585465940995983}
   previewMaterial: {fileID: 2100000, guid: 943a4507848dd58498b286090584e984, type: 2}
   placedMaterial: {fileID: 2100000, guid: 33cc24c12db80574a815092bbf999169, type: 2}
   yOffsset: 0

@@ -11,8 +11,6 @@
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Middle_Extensive.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Middle_Extensive.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Start.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Start.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlacementPlane.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlacementPlane.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +105,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768239472299</updated>
       <workItem from="1768239473523" duration="3000" />
-      <workItem from="1768239620082" duration="13713000" />
+      <workItem from="1768239620082" duration="21745000" />
     </task>
     <servers />
   </component>
