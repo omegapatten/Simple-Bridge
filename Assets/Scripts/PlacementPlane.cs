@@ -10,7 +10,7 @@ public class PlacementPlane : MonoBehaviour
     /// <summary>
     /// Interface for listening to placement plane events.
     /// </summary>
-    public interface IPlacementPlaneListener
+    internal interface IPlacementPlaneListener
     {
         internal void PlacementPlaneMouseDownAtPosition(Vector3 position);
         internal void PlacementPlaneMouseUpAtPosition(Vector3 position);

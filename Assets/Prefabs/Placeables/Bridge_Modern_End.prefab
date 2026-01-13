@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7498073727084859616}
   - component: {fileID: 704891801773484430}
   - component: {fileID: 548862309569820148}
+  - component: {fileID: 64055318363070580}
   m_Layer: 0
   m_Name: Bridge_Modern_End
   m_TagString: Untagged
@@ -105,3 +106,15 @@ MonoBehaviour:
   yOffsset: 0
   isPlaced: 0
   bottomYOffset: 0
+--- !u!114 &64055318363070580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954577426237510335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae742e5cebb09f4ab38c5e05dd3d37f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05d65463-1f46-47bc-a59d-008b658a805c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Draggable.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Draggable.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlacementPlane.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlacementPlane.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +105,7 @@
       <option name="presentableId" value="Default" />
       <updated>1768239472299</updated>
       <workItem from="1768239473523" duration="3000" />
-      <workItem from="1768239620082" duration="22126000" />
+      <workItem from="1768239620082" duration="23185000" />
     </task>
     <servers />
   </component>

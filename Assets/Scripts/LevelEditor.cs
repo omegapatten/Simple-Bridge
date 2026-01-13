@@ -6,7 +6,7 @@ using UnityEngine;
 /// Holds references to componeents needed to edit a level and the level itself
 /// May allow exporting of levels eventually too
 /// </summary>
-public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
+public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener, Draggable.IListener
 {
     /// <summary>
     /// The level object used to hold the placed objects 
@@ -342,5 +342,25 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     }
     
     #endregion
+
+    void Draggable.IListener.DraggableMouseDownAtPosition(Vector3 position)
+    {
+        
+    }
+
+    void Draggable.IListener.DraggableMouseUpAtPosition(Vector3 position)
+    {
+        
+    }
+
+    void Draggable.IListener.DraggableMouseDragAtPosition(Vector3 position)
+    {
+        
+    }
+
+    void Draggable.IListener.DraggableMouseOverAtPosition(Vector3 position)
+    {
+        
+    }
 }
 

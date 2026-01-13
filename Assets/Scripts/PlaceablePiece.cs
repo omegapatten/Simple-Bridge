@@ -5,6 +5,7 @@ using UnityEngine;
 /// </summary>
 public class PlaceablePiece : MonoBehaviour
 {
+    
     [SerializeField] private Renderer pieceRenderer;
     /// <summary>
     /// material used when previewing placement
@@ -22,6 +23,9 @@ public class PlaceablePiece : MonoBehaviour
     /// Used to determine if it's parts of the current placement logic and how it presents
     /// </summary>
     public bool isPlaced = false;
+    /// <summary>
+    /// used for offesting off the plane when placing
+    /// </summary>
     public float bottomYOffset = 0f;
     
     private void Start()
