@@ -149,7 +149,7 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         }
 
         // Fill between with tertiary and filler pieces.
-        UpdateMiddlePieces(primaryAnchorPosition, mousePosition, forward, rotForward);
+        UpdateMiddlePieces(primaryAnchorPosition, mousePosition, forward, rotBack);
     }
 
     private Quaternion RotationLookingAlong(Vector3 direction)
