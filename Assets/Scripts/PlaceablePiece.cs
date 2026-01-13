@@ -16,33 +16,29 @@ public class PlaceablePiece : MonoBehaviour
     /// </summary>
     [SerializeField] private Material placedMaterial;
 
-    [SerializeField] private float yOffsset;
+    [SerializeField] public float yOffsset;
     /// <summary>
     /// reference to the draggable component for this placeable piece
     /// enable and disable as needed
     /// </summary>
     [SerializeField] private Draggable draggable;
+    /// <summary>
+    /// if the model was authored facing a different direction than the placement plane's forward
+    /// use this to offset the yaw rotation when placing
+    /// </summary>
+    [SerializeField] public float yawRotationOffset = 0f;
     
     /// <summary>
     /// Has this placeable been placed yet?
     /// Used to determine if it's parts of the current placement logic and how it presents
     /// </summary>
     public bool isPlaced = false;
-    /// <summary>
-    /// used for offesting off the plane when placing
-    /// </summary>
-    public float bottomYOffset = 0f;
     
     private void Start()
     {
-        SetBottomYOffset();
         pieceRenderer.material = previewMaterial;
     }
     
-    private void SetBottomYOffset()
-    {
-        bottomYOffset = yOffsset;
-    }
     
     /// <summary>
     /// mark this piece as placed and change its material and draggable state

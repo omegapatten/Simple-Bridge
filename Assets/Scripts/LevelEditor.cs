@@ -28,8 +28,8 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     /// While true, we are in a "dragging a line" placement session.
     /// </summary>
     private bool isDraggingPieces = false;
-    private PlaceablePiece anchorPiece;
-    private PlaceablePiece mobilePiece;
+    private PlaceablePiece cachedAnchorPiece;
+    private PlaceablePiece cachedMobilePiece;
     /// <summary>
     /// When true, prevents new bridges 
     /// </summary>
@@ -67,7 +67,6 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     /// TODO: put these in the SO_Placeable instead so that different placeables can have different offsets. Out of scope for this prototype.
     /// </summary>
     private float _lookRotationYawOffsetDegrees = -90f;
-    private float _primaryYawAdditionalOffsetDegrees = 180f;
 
     private void Awake()
     {
@@ -142,11 +141,11 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         var rotBack = RotationLookingAlong(-forward);
 
         // Anchor piece towards the mobile piece
-        anchorPiece.transform.rotation = rotForward * Quaternion.Euler(0f, _primaryYawAdditionalOffsetDegrees, 0f);
+        anchorPiece.transform.rotation = rotForward * Quaternion.Euler(0f, anchorPiece.yawRotationOffset, 0f);
 
         // Place mobile piece at the current mouse and point it back.
         mobilePiece.transform.position = ApplyBottomYOffset(mobilePiece, mousePosition);
-        mobilePiece.transform.rotation = rotBack;
+        mobilePiece.transform.rotation = rotBack * Quaternion.Euler(0f, mobilePiece.yawRotationOffset, 0f);
         
         // Fill between with tertiary and filler pieces.
         UpdateMiddlePieces(anchorPiece.transform.position, mousePosition, forward, rotBack);
@@ -240,7 +239,7 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         if (piece == null)
             return position;
 
-        var yOffset = piece.bottomYOffset;
+        var yOffset = piece.yOffsset;
         return new Vector3(position.x, position.y + yOffset, position.z);
     }
 
@@ -366,10 +365,10 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         }
         
         // Set anchor and mobile pieces, this way they are cached for drag updates
-        anchorPiece = GetAnchorPieceGivenMobilePiece(draggable.GetComponent<PlaceablePiece>());
-        mobilePiece = draggable.GetComponent<PlaceablePiece>();
+        cachedAnchorPiece = GetAnchorPieceGivenMobilePiece(draggable.GetComponent<PlaceablePiece>());
+        cachedMobilePiece = draggable.GetComponent<PlaceablePiece>();
         
-        UpdateDragPreview(position, anchorPiece, mobilePiece);
+        UpdateDragPreview(position, cachedAnchorPiece, cachedMobilePiece);
     }
 
     void Draggable.IListener.DraggableMouseUpAtPosition(Draggable draggable, Vector3 position)
@@ -379,11 +378,11 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
 
         isDraggingPieces = false;
 
-        UpdateDragPreview(position, anchorPiece, mobilePiece);
+        UpdateDragPreview(position, cachedAnchorPiece, cachedMobilePiece);
 
         // Clear cached pieces
-        anchorPiece = null;
-        mobilePiece = null;
+        cachedAnchorPiece = null;
+        cachedMobilePiece = null;
         
         // Lock everything in.
         foreach (var piece in piecesToPlace)
@@ -395,11 +394,11 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
 
     void Draggable.IListener.DraggableMouseDragAtPosition(Draggable draggable, Vector3 position)
     {
-        if (!isDraggingPieces || initialPiecesPlaced)
+        if (!isDraggingPieces)
             return;
 
-        
-        UpdateDragPreview(position, anchorPiece, mobilePiece);
+        Debug.Log("dragging at pos " + position);
+        UpdateDragPreview(position, cachedAnchorPiece, cachedMobilePiece);
     }
     
     #endregion

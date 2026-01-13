@@ -106,8 +106,8 @@ MonoBehaviour:
   placedMaterial: {fileID: 2100000, guid: 33cc24c12db80574a815092bbf999169, type: 2}
   yOffsset: 0
   draggable: {fileID: -5336855677835495574}
+  yawRotationOffset: 180
   isPlaced: 0
-  bottomYOffset: 0
 --- !u!114 &-5336855677835495574
 MonoBehaviour:
   m_ObjectHideFlags: 0
