@@ -12,21 +12,27 @@ public class Draggable : MonoBehaviour
         internal void DraggableMouseDownAtPosition(Vector3 position);
         internal void DraggableMouseUpAtPosition(Vector3 position);
         internal void DraggableMouseDragAtPosition(Vector3 position);
-        internal void DraggableMouseOverAtPosition(Vector3 position);
     }
     
-    [SerializeField] bool enabled = true;
+    /// <summary>
+    /// used to enable/disable dragging functionality
+    /// </summary>
+    [SerializeField] bool draggableEnabled = true;
     
     private IListener _listener;
+    private Collider _collider;
 
     private void Awake()
     {
         // Find the listener in parent objects
+        _collider = GetComponent<Collider>();
+        if (_collider == null)
+            throw new MissingComponentException("No collider found");
+        
         _listener = GetComponentInParent<IListener>();
         if (_listener == null)
-        {
-            throw new Exception("No listener found in parent objects");
-        }
+            throw new MissingComponentException("No listener found in parent objects");
+        
     }
     
     private void OnMouseDown()
@@ -47,12 +53,6 @@ public class Draggable : MonoBehaviour
         var placementPosition = GetMouseWorldPosition();
         _listener.DraggableMouseDragAtPosition(placementPosition);
         MoveWithMouse();
-    }
-
-    private void OnMouseOver()
-    {
-        var placementPosition = GetMouseWorldPosition();
-        _listener.DraggableMouseOverAtPosition(placementPosition);
     }
     
     //method that moves the object with the moouse but keeps it on the y
@@ -82,5 +82,11 @@ public class Draggable : MonoBehaviour
         
         Debug.LogWarning("Mouse point not found");
         return Vector3.zero;
+    }
+    
+    public void SetDraggableEnabled(bool enabled)
+    {
+        draggableEnabled = enabled;
+        _collider.enabled = enabled;
     }
 }

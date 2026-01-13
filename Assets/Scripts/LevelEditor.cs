@@ -357,10 +357,5 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     {
         
     }
-
-    void Draggable.IListener.DraggableMouseOverAtPosition(Vector3 position)
-    {
-        
-    }
 }
 

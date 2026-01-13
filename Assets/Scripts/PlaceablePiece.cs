@@ -17,6 +17,11 @@ public class PlaceablePiece : MonoBehaviour
     [SerializeField] private Material placedMaterial;
 
     [SerializeField] private float yOffsset;
+    /// <summary>
+    /// reference to the draggable component for this placeable piece
+    /// enable and disable as needed
+    /// </summary>
+    [SerializeField] private Draggable draggable;
     
     /// <summary>
     /// Has this placeable been placed yet?
@@ -39,10 +44,19 @@ public class PlaceablePiece : MonoBehaviour
         bottomYOffset = yOffsset;
     }
     
+    /// <summary>
+    /// mark this piece as placed and change its material and draggable state
+    /// </summary>
     public void SetPieceToPlaced()
     {
         isPlaced = true;
         pieceRenderer.material = placedMaterial;
+        
+        //if it's a draggable, enable it after placement
+        if (draggable != null)
+        {
+            draggable.SetDraggableEnabled(true);
+        }
     }
 
     /// <summary>
