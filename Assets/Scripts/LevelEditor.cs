@@ -16,6 +16,11 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     /// <summary> The list of placeables available to place in the level </summary>
     [SerializeField] private SO_EditorPlaceables _placeables; // the list of placeables available to place in the level
 
+    /// <summary>
+    /// Pool used to manage placeable piece instances
+    /// </summary>
+    [SerializeField] private PiecePool _piecePool;
+
     /// <summary> The selected placeable to be placed in the level</summary>
     private SO_Placeable _currentPlaceable;
     /// <summary>
@@ -69,7 +74,29 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     private void Awake()
     {
         SetDefaultSelectedPlaceable();
+        
+        PrewarmCurrentPlaceablePools();
+
         CreateNewPrePlacementPiece();
+    }
+
+    /// <summary>
+    /// Preinstantiates pool objects 
+    /// </summary>
+    private void PrewarmCurrentPlaceablePools()
+    {
+        if (_piecePool == null || _currentPlaceable == null)
+            return;
+
+        //kludged values but this should be adjusted if we're doing 
+        //like looping through all the placeables and prewarming their pools
+        foreach (var placeable in _placeables._placeables)
+        {
+            _piecePool.Prewarm(placeable.primaryPrefab, 2);
+            _piecePool.Prewarm(placeable.secondaryPrefab, 2);
+            _piecePool.Prewarm(placeable.tertiaryPrefab, 64);
+            _piecePool.Prewarm(placeable.fillerPrefab, 64);
+        }
     }
 
     /// <summary>
@@ -84,7 +111,42 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
             return;
         }
 
-        prePlacementPiece = Instantiate(_currentPlaceable.primaryPrefab, _level.transform);
+        prePlacementPiece = GetPiece(_currentPlaceable.primaryPrefab);
+    }
+
+    /// <summary>
+    /// Gets a piece from the pool or instantiates if no pool assigned
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <returns></returns>
+    private PlaceablePiece GetPiece(PlaceablePiece prefab)
+    {
+        if (prefab == null)
+            return null;
+
+        // If no pool assigned, fall back to instantiate.
+        if (_piecePool == null)
+            return Instantiate(prefab, _level.transform);
+
+        return _piecePool.Get(prefab, _level.transform);
+    }
+
+    /// <summary>
+    /// returns a piece to the pool or destroys if no pool assigned
+    /// </summary>
+    /// <param name="piece"></param>
+    private void ReturnPiece(PlaceablePiece piece)
+    {
+        if (piece == null)
+            return;
+
+        if (_piecePool == null)
+        {
+            Destroy(piece.gameObject);
+            return;
+        }
+
+        _piecePool.Return(piece);
     }
 
     /// <summary>
@@ -249,7 +311,10 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         // Grow
         while (list.Count < targetCount)
         {
-            var piece = Instantiate(prefab, _level.transform);
+            if (prefab == null)
+                break;
+
+            var piece = GetPiece(prefab);
             list.Add(piece);
             piecesToPlace.Add(piece);
         }
@@ -261,8 +326,7 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
             var piece = list[idx];
             list.RemoveAt(idx);
             piecesToPlace.Remove(piece);
-            if (piece != null)
-                Destroy(piece.gameObject);
+            ReturnPiece(piece);
         }
     }
 
@@ -299,7 +363,7 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         // Create secondary preview piece if available.
         if (_currentPlaceable.secondaryPrefab != null)
         {
-            secondaryPreviewPiece = Instantiate(_currentPlaceable.secondaryPrefab, _level.transform);
+            secondaryPreviewPiece = GetPiece(_currentPlaceable.secondaryPrefab);
             piecesToPlace.Add(secondaryPreviewPiece);
         }
         
@@ -395,7 +459,6 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         if (!isDraggingPieces)
             return;
 
-        Debug.Log("dragging at pos " + position);
         UpdateDragPreview(position, cachedAnchorPiece, cachedMobilePiece);
     }
     

@@ -24,17 +24,24 @@ public class Draggable : MonoBehaviour
 
     private void Awake()
     {
-        // Find the listener in parent objects
-        _collider = GetComponent<Collider>();
-        if (_collider == null)
-            throw new MissingComponentException("No collider found");
-        
-        _listener = GetComponentInParent<IListener>();
-        if (_listener == null)
-            throw new MissingComponentException("No listener found in parent objects");
-        
+        SetDependencies();
     }
-    
+
+    private void OnEnable()
+    {
+        SetDependencies(); 
+    }
+
+    private void SetDependencies()
+    {
+        // Find the listener in parent objects
+        if (_collider == null)
+            _collider = GetComponent<Collider>();
+        
+        if (_listener == null)
+            _listener = GetComponentInParent<IListener>();
+    }
+
     private void OnMouseDown()
     {
         var placementPosition = GetMouseWorldPosition();
