@@ -47,15 +47,15 @@ public class PlaceablePiece : MonoBehaviour
     /// <summary>
     /// mark this piece as placed and change its material and draggable state
     /// </summary>
-    public void SetPieceToPlaced()
+    public void SetPlaceablePieceState(bool isPlaced)
     {
-        isPlaced = true;
-        pieceRenderer.material = placedMaterial;
+        this.isPlaced = isPlaced;
+        pieceRenderer.material = isPlaced ? placedMaterial : previewMaterial;
         
         //if it's a draggable, enable it after placement
         if (draggable != null)
         {
-            draggable.SetDraggableEnabled(true);
+            draggable.SetDraggableEnabled(isPlaced);
         }
     }
 

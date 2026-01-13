@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="05d65463-1f46-47bc-a59d-008b658a805c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Austin's Bridge Test v2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_End.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_End.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Start.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Placeables/Bridge_Modern_Start.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Draggable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Draggable.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelEditor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlaceablePiece.cs" afterDir="false" />
@@ -31,6 +29,7 @@
     <commands />
     <urls />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -105,13 +104,14 @@
       <option name="presentableId" value="Default" />
       <updated>1768239472299</updated>
       <workItem from="1768239473523" duration="3000" />
-      <workItem from="1768239620082" duration="24872000" />
+      <workItem from="1768239620082" duration="29289000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />

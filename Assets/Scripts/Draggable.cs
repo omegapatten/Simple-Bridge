@@ -9,9 +9,9 @@ public class Draggable : MonoBehaviour
     /// </summary>
     internal interface IListener
     {
-        internal void DraggableMouseDownAtPosition(Vector3 position);
-        internal void DraggableMouseUpAtPosition(Vector3 position);
-        internal void DraggableMouseDragAtPosition(Vector3 position);
+        internal void DraggableMouseDownAtPosition(Draggable draggable, Vector3 position);
+        internal void DraggableMouseUpAtPosition(Draggable draggable, Vector3 position);
+        internal void DraggableMouseDragAtPosition(Draggable draggable, Vector3 position);
     }
     
     /// <summary>
@@ -38,20 +38,20 @@ public class Draggable : MonoBehaviour
     private void OnMouseDown()
     {
         var placementPosition = GetMouseWorldPosition();
-        _listener.DraggableMouseDownAtPosition(placementPosition);
+        _listener.DraggableMouseDownAtPosition(this, placementPosition);
         MoveWithMouse();
     }
     
     private void OnMouseUp()
     {
         var placementPosition = GetMouseWorldPosition();
-        _listener.DraggableMouseUpAtPosition(placementPosition);
+        _listener.DraggableMouseUpAtPosition(this, placementPosition);
     }
 
     private void OnMouseDrag()
     {
         var placementPosition = GetMouseWorldPosition();
-        _listener.DraggableMouseDragAtPosition(placementPosition);
+        _listener.DraggableMouseDragAtPosition(this, placementPosition);
         MoveWithMouse();
     }
     

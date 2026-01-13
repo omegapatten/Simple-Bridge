@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Holds references to componeents needed to edit a level and the level itself
+/// Holds references to components needed to edit a level and the level itself
 /// May allow exporting of levels eventually too
 /// </summary>
 public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener, Draggable.IListener
@@ -27,19 +27,19 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     /// Tracks if the user is currently placing a placeable.
     /// While true, we are in a "dragging a line" placement session.
     /// </summary>
-    private bool isDraggingBridge = false;
+    private bool isDraggingPieces = false;
+    private PlaceablePiece anchorPiece;
+    private PlaceablePiece mobilePiece;
     /// <summary>
-    /// When true, prevents new bridges and now we can just move the existing bridge
+    /// When true, prevents new bridges 
     /// </summary>
-    private bool initialBridgePiecesPlaced = false;
+    private bool initialPiecesPlaced = false;
 
     /// <summary>
     /// The list of pieces that will be placed when the mouse is released.
     /// </summary>
     private readonly List<PlaceablePiece> piecesToPlace = new List<PlaceablePiece>();
 
-    // Current drag-session state
-    private Vector3 primaryAnchorPosition;
     /// <summary>
     /// the piece that follows the cursor around waiting to be placed
     /// </summary>
@@ -105,27 +105,31 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         _currentPlaceable = System.Linq.Enumerable.First(_placeables._placeables);
     }
     
-    private void UpdateDragPreview(Vector3 mousePosition)
+    /// <summary>
+    /// Updates the drag preview pieces based on the current position of the mouse/mobile piece
+    /// </summary>
+    /// <param name="mousePosition"> the position of the mouse/piece that is being moved</param>
+    /// <param name="anchorPiece">the anchor point of the bride. origin or just the other end not moving</param>
+    /// <param name="mobilePiece">the piece that is moving</param>
+    private void UpdateDragPreview(Vector3 mousePosition, PlaceablePiece anchorPiece, PlaceablePiece mobilePiece)
     {
         if (prePlacementPiece == null)
+        {
             return;
-
-        //anchor the first piece in place
-        prePlacementPiece.transform.position = primaryAnchorPosition;
-
+        }
+        
         //get direction from primary piece to mouse
-        var directionFromOrigin = mousePosition - primaryAnchorPosition;
+        var directionFromOrigin = mousePosition - anchorPiece.transform.position;
         directionFromOrigin.y = 0f;
 
         var dist = directionFromOrigin.magnitude;
         if (dist < MinDragDistance)
         {
-            // Not enough distance to form a meaningful line yet: stack secondary on primary and clear middle pieces.
-            if (secondaryPreviewPiece != null)
-            {
-                secondaryPreviewPiece.transform.position = primaryAnchorPosition;
-            }
-
+            // Too close to form a line. Just show the primary piece at the anchor.
+            //TODO: could do something better hear because right now it looks bad with them stacked
+            // maybe some UI treatment showing an "outward arrow" to tell them to drag away? 
+            mobilePiece.transform.position = anchorPiece.transform.position;
+            
             ResizePieceList(tertiaryPreviewPieces, 0, _currentPlaceable.tertiaryPrefab);
             ResizePieceList(fillerPreviewPieces, 0, _currentPlaceable.fillerPrefab);
             return;
@@ -137,19 +141,15 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         var rotForward = RotationLookingAlong(forward);
         var rotBack = RotationLookingAlong(-forward);
 
-        // Rotate primary toward the current mouse.
-        prePlacementPiece.transform.rotation = rotForward * Quaternion.Euler(0f, _primaryYawAdditionalOffsetDegrees, 0f);
+        // Anchor piece towards the mobile piece
+        anchorPiece.transform.rotation = rotForward * Quaternion.Euler(0f, _primaryYawAdditionalOffsetDegrees, 0f);
 
-        // Place secondary at the current mouse and point it back.
-        if (secondaryPreviewPiece != null)
-        {
-            var secondaryPos = ApplyBottomYOffset(secondaryPreviewPiece, mousePosition);
-            secondaryPreviewPiece.transform.position = secondaryPos;
-            secondaryPreviewPiece.transform.rotation = rotBack;
-        }
-
+        // Place mobile piece at the current mouse and point it back.
+        mobilePiece.transform.position = ApplyBottomYOffset(mobilePiece, mousePosition);
+        mobilePiece.transform.rotation = rotBack;
+        
         // Fill between with tertiary and filler pieces.
-        UpdateMiddlePieces(primaryAnchorPosition, mousePosition, forward, rotBack);
+        UpdateMiddlePieces(anchorPiece.transform.position, mousePosition, forward, rotBack);
     }
 
     private Quaternion RotationLookingAlong(Vector3 direction)
@@ -268,6 +268,20 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
                 Destroy(piece.gameObject);
         }
     }
+
+    /// <summary>
+    /// Given one end of the chain of placeable pieces, give the other
+    /// TODO: very specific to this protoype of a bridge. 
+    /// </summary>
+    /// <param name="piece"></param>
+    /// <returns></returns>
+    private PlaceablePiece GetAnchorPieceGivenMobilePiece(PlaceablePiece piece)
+    {
+        if (piece == prePlacementPiece)
+            return secondaryPreviewPiece;
+        else
+            return prePlacementPiece;
+    }
     
     #region Listeners
 
@@ -275,15 +289,14 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
     {
         // First click: anchor the primary piece at the clicked position (with y-offset),
         // and start a drag session that previews a full line until mouse up.
-        if (isDraggingBridge || initialBridgePiecesPlaced)
+        if (isDraggingPieces || initialPiecesPlaced)
             return;
  
-        isDraggingBridge = true;
+        isDraggingPieces = true;
 
         // Anchor the current prePlacementPiece.
-        primaryAnchorPosition = ApplyBottomYOffset(prePlacementPiece, position);
-        prePlacementPiece.transform.position = primaryAnchorPosition;
-        piecesToPlace.Clear();
+        var offsetPosition = ApplyBottomYOffset(prePlacementPiece, position);
+        prePlacementPiece.transform.position = offsetPosition;
         piecesToPlace.Add(prePlacementPiece);
 
         // Create secondary preview piece if available.
@@ -294,45 +307,40 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         }
         
         // Update once immediately so the user sees feedback even before first drag event.
-        UpdateDragPreview(position);
+        UpdateDragPreview(position, prePlacementPiece, secondaryPreviewPiece);
     }
 
     void PlacementPlane.IPlacementPlaneListener.PlacementPlaneMouseUpAtPosition(Vector3 position)
     {
-        if (!isDraggingBridge || initialBridgePiecesPlaced)
+        if (!isDraggingPieces || initialPiecesPlaced)
             return;
         
-        initialBridgePiecesPlaced = true;
+        initialPiecesPlaced = true;
 
-        isDraggingBridge = false;
+        isDraggingPieces = false;
 
         // Final update at mouse-up to ensure placement matches final cursor position.
-        UpdateDragPreview(position);
+        UpdateDragPreview(position, prePlacementPiece, secondaryPreviewPiece);
 
         // Lock everything in.
         foreach (var piece in piecesToPlace)
         {
             if (piece != null)
-                piece.SetPieceToPlaced();
+                piece.SetPlaceablePieceState(true);
         }
-        
-        //remove placement pieces from the prePlacementPieces list
-        prePlacementPiece = null;
-        secondaryPreviewPiece = null;   
-        piecesToPlace.Clear(); // clear the list cause they are no longer preview pieces
     }
 
     void PlacementPlane.IPlacementPlaneListener.PlacementPlaneMouseDragAtPosition(Vector3 position)
     {
-        if (!isDraggingBridge || initialBridgePiecesPlaced)
+        if (!isDraggingPieces || initialPiecesPlaced)
             return;
 
-        UpdateDragPreview(position);
+        UpdateDragPreview(position, prePlacementPiece, secondaryPreviewPiece);
     }
 
     void PlacementPlane.IPlacementPlaneListener.PlacementPlaneMouseOverAtPosition(Vector3 position)
     {
-        if (isDraggingBridge || initialBridgePiecesPlaced)
+        if (isDraggingPieces || initialPiecesPlaced)
             return;
 
         if (prePlacementPiece == null)
@@ -341,21 +349,60 @@ public class LevelEditor : MonoBehaviour, PlacementPlane.IPlacementPlaneListener
         prePlacementPiece.transform.position = ApplyBottomYOffset(prePlacementPiece, position);
     }
     
+
+    void Draggable.IListener.DraggableMouseDownAtPosition(Draggable draggable, Vector3 position)
+    {
+        //if it's already dragging, 
+        if (isDraggingPieces)
+            return;
+ 
+        isDraggingPieces = true;
+        
+        // un place the placeables
+        foreach (var piece in piecesToPlace)
+        {
+            if (piece != null)
+                piece.SetPlaceablePieceState(false);
+        }
+        
+        // Set anchor and mobile pieces, this way they are cached for drag updates
+        anchorPiece = GetAnchorPieceGivenMobilePiece(draggable.GetComponent<PlaceablePiece>());
+        mobilePiece = draggable.GetComponent<PlaceablePiece>();
+        
+        UpdateDragPreview(position, anchorPiece, mobilePiece);
+    }
+
+    void Draggable.IListener.DraggableMouseUpAtPosition(Draggable draggable, Vector3 position)
+    {
+        if (!isDraggingPieces)
+            return;
+
+        isDraggingPieces = false;
+
+        UpdateDragPreview(position, anchorPiece, mobilePiece);
+
+        // Clear cached pieces
+        anchorPiece = null;
+        mobilePiece = null;
+        
+        // Lock everything in.
+        foreach (var piece in piecesToPlace)
+        {
+            if (piece != null)
+                piece.SetPlaceablePieceState(true);
+        }
+    }
+
+    void Draggable.IListener.DraggableMouseDragAtPosition(Draggable draggable, Vector3 position)
+    {
+        if (!isDraggingPieces || initialPiecesPlaced)
+            return;
+
+        
+        UpdateDragPreview(position, anchorPiece, mobilePiece);
+    }
+    
     #endregion
 
-    void Draggable.IListener.DraggableMouseDownAtPosition(Vector3 position)
-    {
-        
-    }
-
-    void Draggable.IListener.DraggableMouseUpAtPosition(Vector3 position)
-    {
-        
-    }
-
-    void Draggable.IListener.DraggableMouseDragAtPosition(Vector3 position)
-    {
-        
-    }
 }
 
